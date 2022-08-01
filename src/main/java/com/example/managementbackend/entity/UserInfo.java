@@ -28,29 +28,14 @@ public class UserInfo {
     @Column(length = 255, unique = true, nullable = true)
     private String email;
 
-
     @Column(name = "password")
     private String password;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
 
-    @Column(name = "created_by")
-    @CreatedBy
-    private Long createdBy;
 
-    @Column(name = "created_at")
-    @CreatedDate
-    private Date createdAt;
+    public UserInfo(){
 
-    @Column(name = "updated_by")
-    @LastModifiedBy
-    private Long updatedBy;
-
-    @Column(name = "updated_at")
-    @LastModifiedDate
-    private Date updatedAt;
-
+    }
     public Long getId() {
         return id;
     }
@@ -86,46 +71,6 @@ public class UserInfo {
     public String getPassword() { return password; }
 
     public void setPassword(String password) { this.password = password; }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Long getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Long getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(Long updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
 
 }

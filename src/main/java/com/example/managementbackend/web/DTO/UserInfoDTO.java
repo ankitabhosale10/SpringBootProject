@@ -10,7 +10,6 @@ public class UserInfoDTO {
     private String lastName;
     private String email;
     private String password;
-    private String phoneNumber;
 
     public Long getId() { return id; }
 
@@ -35,9 +34,6 @@ public class UserInfoDTO {
 
     public void setPassword(String password) { this.password = password; }
 
-    public String getPhoneNumber() { return phoneNumber; }
-
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
     @JsonIgnore
     public UserInfo getEntity() {
@@ -47,10 +43,7 @@ public class UserInfoDTO {
         entity.setLastName(this.lastName);
         entity.setEmail(this.email);
         entity.setPassword(this.password);
-        entity.setPhoneNumber(this.phoneNumber);
         return entity;
     }
-
-
 
 }
