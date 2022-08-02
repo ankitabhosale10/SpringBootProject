@@ -3,6 +3,9 @@ package com.example.managementbackend.web.rest.controller;
 import com.example.managementbackend.entity.UserInfo;
 import com.example.managementbackend.service.UserInfoService;
 import com.example.managementbackend.web.DTO.UserInfoDTO;
+import javassist.NotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -19,36 +22,14 @@ public class UserInfoController {
 
     public UserInfoController(UserInfoService userInfoService) { this.userInfoService = userInfoService; }
 
-    @ModelAttribute("registration")
-    public UserInfoDTO userInfoDTO() {
-        return new UserInfoDTO();
-    }
-
-    @RequestMapping(value = "/registration",method = RequestMethod.GET)
-    public ModelAndView registrationPage(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("registration");
-        return modelAndView;
-    }
-//    @GetMapping("/registration")
-//    public String showRegistrationForm(ModelMap model) {
-//        return "registration";
-//    }
     @PostMapping("/registration")
-    public String registerUserAccount(@ModelAttribute("registration") @Valid UserInfoDTO userInfoDTO,
-                                      BindingResult result){
-        boolean existing = userInfoService.findByEmail(userInfoDTO.getEmail());
-        System.out.println(userInfoDTO.toString());
-        if (result.equals(existing)) {
-            result.rejectValue("email", null, "There is already an account registered with that email");
-        }
-        if (result.hasErrors()) {
-            return "registration";
-        }
-
-        userInfoService.save(userInfoDTO);
-        return "redirect:/registration?success";
+    public ResponseEntity registerUserAccount(@RequestBody UserInfoDTO userInfoDTO){
+        return new ResponseEntity(userInfoService.userRegister(userInfoDTO), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/user")
+    public ResponseEntity userLogin(@RequestParam String email) throws NotFoundException {
 
+        return new ResponseEntity(userInfoService.userlogin(email), HttpStatus.OK);
+    }
 }

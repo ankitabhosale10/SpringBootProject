@@ -5,6 +5,7 @@ import com.example.managementbackend.entity.UserInfo;
 import com.example.managementbackend.repository.UserInfoRepository;
 import com.example.managementbackend.service.UserInfoService;
 import com.example.managementbackend.web.DTO.UserInfoDTO;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,22 +20,24 @@ public class UserInfoServiceImp implements UserInfoService {
 //    @Autowired
 //    public  static PasswordEncoder passwordEncoder;
 
+
     @Override
-    public UserInfo save(UserInfoDTO registration) {
+    public Object userRegister(UserInfoDTO registration) {
         UserInfo userInfo=new UserInfo();
         userInfo.setFirstName(registration.getFirstName());
         userInfo.setLastName(registration.getLastName());
         userInfo.setEmail(registration.getEmail());
         userInfo.setPassword(registration.getPassword());
-//        userInfo.setPassword(passwordEncoder.encode(registration.getPassword()));
         return userInfoRepository.save(userInfo);
     }
 
-
-
     @Override
-    public boolean findByEmail(String email) {
-        return userInfoRepository.findByEmail(email)!= null ? true : false;
+    public Object userlogin(String email) throws NotFoundException {
+        UserInfo userInfo=new UserInfo();
+        if (userInfo == null) {
+            throw new NotFoundException("Invalid username or password.");
+        }
+        return userInfoRepository.findByEmail(email);
     }
 
 

@@ -35,15 +35,15 @@ public class UserInfoDTO {
     public void setPassword(String password) { this.password = password; }
 
 
-    @JsonIgnore
-    public UserInfo getEntity() {
-        UserInfo entity = new UserInfo();
-        entity.setId(this.id);
-        entity.setFirstName(this.firstName);
-        entity.setLastName(this.lastName);
-        entity.setEmail(this.email);
-        entity.setPassword(this.password);
-        return entity;
-    }
+//    @JsonIgnore
+//    public UserInfo getEntity() {
+//        UserInfo entity = new UserInfo();
+//        entity.setId(this.id);
+//        entity.setFirstName(this.firstName);
+//        entity.setLastName(this.lastName);
+//        entity.setEmail(this.email);
+//        entity.setPassword(this.password);
+//        return entity;
+//    }
 
 }

@@ -32,7 +32,6 @@ public class UserInfo {
     private String password;
 
 
-
     public UserInfo(){
 
     }
@@ -71,6 +70,5 @@ public class UserInfo {
     public String getPassword() { return password; }
 
     public void setPassword(String password) { this.password = password; }
-
 
 }
