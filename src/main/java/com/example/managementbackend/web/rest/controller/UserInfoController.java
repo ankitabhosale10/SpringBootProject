@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 @RestController
+@RequestMapping("/user")
 public class UserInfoController {
 
     private UserInfoService userInfoService;
@@ -25,7 +26,7 @@ public class UserInfoController {
         return new ResponseEntity(userInfoService.userRegister(userInfoDTO), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/user")
+    @GetMapping(value = "/userLogin")
     public ResponseEntity userLogin(@RequestParam String email,@RequestParam String password) throws NotFoundException {
         return new ResponseEntity(userInfoService.userlogin(email,password), HttpStatus.OK);
     }
