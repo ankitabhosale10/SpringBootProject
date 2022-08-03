@@ -27,7 +27,6 @@ public class UserInfoController {
 
     @GetMapping(value = "/user")
     public ResponseEntity userLogin(@RequestParam String email,@RequestParam String password) throws NotFoundException {
-
         return new ResponseEntity(userInfoService.userlogin(email,password), HttpStatus.OK);
     }
 
@@ -40,7 +39,9 @@ public class UserInfoController {
 
 //    handler for process form
     @PostMapping("/submit")
-    public String processForm(@Valid @ModelAttribute ("loginData") LoginData loginData, BindingResult result){
-      return "success";
+    public ModelAndView processForm(@Valid @ModelAttribute ("loginData") LoginData loginData, BindingResult result){
+        ModelAndView modelAndView=new ModelAndView();
+        modelAndView.setViewName("success");
+        return modelAndView;
     }
 }

@@ -16,10 +16,10 @@ public class UserInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotNull(message = "firstName is required")
     @Column(name = "first_name")
     private String firstName;
-
+    @NotNull(message = "lastName is required")
     @Column(name = "last_name")
     private String lastName;
 

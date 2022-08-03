@@ -4,8 +4,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class LoginData {
-    @NotBlank(message = "Email can not be empty")
+
     private String email;
+    @NotBlank(message = "password can not be empty")
     @Size(min = 3, max = 10, message = "password must be in between 3 to 10 Characters")
     private String password;
 
@@ -26,4 +27,6 @@ public class LoginData {
                 ", password='" + password + '\'' +
                 '}';
     }
+
+
 }
