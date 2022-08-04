@@ -6,9 +6,9 @@ import com.example.managementbackend.repository.UserInfoRepository;
 import com.example.managementbackend.service.UserInfoService;
 import com.example.managementbackend.web.DTO.UserInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,8 +20,9 @@ public class UserInfoServiceImp implements UserInfoService {
     @Autowired
     private UserInfoRepository userInfoRepository;
 
-//    @Autowired
-//    public  static PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
 
     @Override
@@ -30,7 +31,7 @@ public class UserInfoServiceImp implements UserInfoService {
         userInfo.setFirstName(registration.getFirstName());
         userInfo.setLastName(registration.getLastName());
         userInfo.setEmail(registration.getEmail());
-        userInfo.setPassword(registration.getPassword());
+        userInfo.setPassword(passwordEncoder.encode(registration.getPassword()));
         return userInfoRepository.save(userInfo);
     }
 
@@ -44,12 +45,6 @@ public class UserInfoServiceImp implements UserInfoService {
         return ResponseEntity.of(Optional.of(userInfoRepository.findByEmail(email)));
 
     }
-
-//    private static void encodePassword(UserInfo userInfo){
-//        userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
-//    }
-
-
 
 
 }

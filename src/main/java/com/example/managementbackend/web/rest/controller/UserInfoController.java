@@ -6,6 +6,7 @@ import com.example.managementbackend.web.DTO.UserInfoDTO;
 import javassist.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +20,13 @@ public class UserInfoController {
 
     private UserInfoService userInfoService;
 
+    private BCryptPasswordEncoder passwordEncoder;
+
     public UserInfoController(UserInfoService userInfoService) { this.userInfoService = userInfoService; }
 
     @PostMapping("/registration")
     public ResponseEntity registerUserAccount(@RequestBody UserInfoDTO userInfoDTO){
+
         return new ResponseEntity(userInfoService.userRegister(userInfoDTO), HttpStatus.OK);
     }
 
@@ -31,18 +35,16 @@ public class UserInfoController {
         return new ResponseEntity(userInfoService.userlogin(email,password), HttpStatus.OK);
     }
 
-    @GetMapping("/loginForm")
-    public ModelAndView openForm(Model model){
-        ModelAndView modelAndView=new ModelAndView();
-        model.addAttribute("loginData",new LoginData()).toString();
-      return modelAndView;
-    }
+
 
 //    handler for process form
     @PostMapping("/submit")
     public ModelAndView processForm(@Valid @ModelAttribute ("loginData") LoginData loginData, BindingResult result){
+
+        System.out.println(loginData.toString());
         ModelAndView modelAndView=new ModelAndView();
         modelAndView.setViewName("success");
+        modelAndView.addObject("loginData",loginData);
         return modelAndView;
     }
 }
