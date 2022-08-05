@@ -1,7 +1,9 @@
 package com.example.managementbackend.configuration;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,6 +34,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
        return  daoAuthenticationProvider;
     }
 
+    public MessageSource messageSource(){
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        // Load file: validation.properties
+        messageSource.setBasename("classpath:validation");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
+    }
+    
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
        auth.authenticationProvider(authenticationProvider());

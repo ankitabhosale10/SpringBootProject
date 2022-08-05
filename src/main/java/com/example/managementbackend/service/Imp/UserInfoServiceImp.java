@@ -4,10 +4,9 @@ package com.example.managementbackend.service.Imp;
 import com.example.managementbackend.entity.UserInfo;
 import com.example.managementbackend.repository.UserInfoRepository;
 import com.example.managementbackend.service.UserInfoService;
-import com.example.managementbackend.entity.UserInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -24,7 +23,7 @@ public class UserInfoServiceImp implements UserInfoService {
 
 
     @Override
-    public Object userRegister(UserInfoDTO registration) {
+    public UserInfo userRegister(UserInfo registration) {
         UserInfo userInfo = new UserInfo();
         userInfo.setFirstName(registration.getFirstName());
         userInfo.setLastName(registration.getLastName());
@@ -34,13 +33,13 @@ public class UserInfoServiceImp implements UserInfoService {
     }
 
     @Override
-    public Object userlogin(String email, String password) {
+    public UserInfo userlogin(String email, String password) {
         UserInfo userInfo = new UserInfo();
         if (userInfo == null) {
-//            throw new NotFoundException("Invalid username or password.");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            throw new UsernameNotFoundException("Invalid username or password.");
+
         }
-        return ResponseEntity.of(Optional.of(userInfoRepository.findByEmail(email)));
+        return ResponseEntity.of(Optional.of(userInfoRepository.findByEmail(email))).getBody();
 
     }
 

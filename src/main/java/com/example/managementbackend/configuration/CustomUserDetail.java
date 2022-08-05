@@ -15,6 +15,8 @@ public class CustomUserDetail implements UserDetails {
         this.userInfo = userInfo;
     }
 
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
@@ -48,7 +50,5 @@ public class CustomUserDetail implements UserDetails {
     }
 
     @Override
-    public boolean isEnabled() {
-        return false;
-    }
+    public boolean isEnabled() { return  userInfo.isActive(); }
 }

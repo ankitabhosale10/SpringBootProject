@@ -10,8 +10,11 @@ import java.util.Optional;
 
 @Repository
 public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
-    Object findByEmail(String email);
+
+    UserInfo findByEmail(String email);
 
     @Query("SELECT U FROM UserInfo U WHERE U.email=:email")
     public UserInfo getByUserEmail(@Param("email") String email);
+
+    UserInfo findByVerificationCode(@Param("authToken") String authToken);
 }

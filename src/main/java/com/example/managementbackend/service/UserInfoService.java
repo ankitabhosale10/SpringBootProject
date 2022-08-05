@@ -1,11 +1,11 @@
 package com.example.managementbackend.service;
 
-import com.example.managementbackend.entity.UserInfoDTO;
+import com.example.managementbackend.entity.UserInfo;
 
 public interface UserInfoService {
 
-    Object userRegister(UserInfoDTO userInfoDTO);
+    UserInfo userRegister(UserInfo userInfoDTO);
 
-    Object userlogin(String email, String password);
+    UserInfo userlogin(String email, String password);
 
 }
