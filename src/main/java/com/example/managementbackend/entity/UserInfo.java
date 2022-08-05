@@ -1,14 +1,9 @@
 package com.example.managementbackend.entity;
 
-
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "user")
@@ -31,10 +26,18 @@ public class UserInfo {
     @Column(name = "password")
     private String password;
 
+    @Column
+    private Timestamp createdDate;
 
-    public UserInfo(){
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
+    private boolean enabled;
+
+    public UserInfo() {
 
     }
+
     public Long getId() {
         return id;
     }
@@ -67,9 +70,27 @@ public class UserInfo {
         this.email = email;
     }
 
-    public String getPassword() { return password; }
+    public String getPassword() {
+        return password;
+    }
 
-    public void setPassword(String password) { this.password = password; }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Timestamp createdDate) { this.createdDate = createdDate; }
+
+    public String getVerificationCode() { return verificationCode; }
+
+    public void setVerificationCode(String verificationCode) { this.verificationCode = verificationCode; }
+
+    public boolean isEnabled() { return enabled; }
+
+    public void setEnabled(boolean enabled) { this.enabled = enabled; }
 
     @Override
     public String toString() {

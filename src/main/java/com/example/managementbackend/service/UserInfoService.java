@@ -1,6 +1,6 @@
 package com.example.managementbackend.service;
 
-import com.example.managementbackend.web.DTO.UserInfoDTO;
+import com.example.managementbackend.entity.UserInfoDTO;
 
 public interface UserInfoService {
 

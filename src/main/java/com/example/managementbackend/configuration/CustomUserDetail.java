@@ -1,4 +1,4 @@
-package com.example.managementbackend.config.security.service;
+package com.example.managementbackend.configuration;
 
 import com.example.managementbackend.entity.UserInfo;
 import org.springframework.security.core.GrantedAuthority;

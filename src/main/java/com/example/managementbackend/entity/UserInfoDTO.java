@@ -1,4 +1,4 @@
-package com.example.managementbackend.web.DTO;
+package com.example.managementbackend.entity;
 
 import com.example.managementbackend.entity.UserInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;

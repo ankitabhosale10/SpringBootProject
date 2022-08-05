@@ -1,4 +1,4 @@
-package com.example.managementbackend.config.security.service;
+package com.example.managementbackend.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
