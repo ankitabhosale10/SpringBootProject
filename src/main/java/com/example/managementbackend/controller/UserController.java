@@ -1,14 +1,13 @@
 package com.example.managementbackend.controller;
 
-import com.example.managementbackend.entity.UserInfo;
-import com.example.managementbackend.repository.UserInfoRepository;
-import com.example.managementbackend.service.UserInfoService;
+import com.example.managementbackend.registration.UserInfo;
+import com.example.managementbackend.registration.UserInfoRepository;
+import com.example.managementbackend.registration.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -18,9 +17,9 @@ import java.util.UUID;
 public class UserController {
     @Autowired
     private UserInfoRepository repo;
-    private UserInfoService userInfoService;
 
     private BCryptPasswordEncoder passwordEncoder;
+    private UserInfoService userInfoService;
 
     public UserController(UserInfoService userInfoService) {
         this.userInfoService = userInfoService;
@@ -69,7 +68,6 @@ public class UserController {
             mv.addObject("message", "valid Credential");
             return mv;
         }
-
     }
 
     @GetMapping("/account-verification/{authToken}")

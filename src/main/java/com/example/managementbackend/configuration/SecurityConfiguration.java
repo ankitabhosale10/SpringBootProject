@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
-    
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
        auth.authenticationProvider(authenticationProvider());
@@ -49,7 +49,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/**").permitAll().and().formLogin().and().csrf().disable();
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated().and()
+                .formLogin();
     }
 }
 

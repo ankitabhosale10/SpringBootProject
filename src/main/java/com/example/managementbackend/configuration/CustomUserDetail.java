@@ -1,9 +1,12 @@
 package com.example.managementbackend.configuration;
 
-import com.example.managementbackend.entity.UserInfo;
+import com.example.managementbackend.registration.UserInfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.Collection;
 import java.util.List;
 
@@ -15,7 +18,8 @@ public class CustomUserDetail implements UserDetails {
         this.userInfo = userInfo;
     }
 
-
+    @Enumerated(EnumType.STRING)
+    private CustomUserRole customUserRole;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

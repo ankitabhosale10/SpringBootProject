@@ -1,14 +1,12 @@
-package com.example.managementbackend.service.Imp;
+package com.example.managementbackend.registration;
 
 
-import com.example.managementbackend.entity.UserInfo;
-import com.example.managementbackend.repository.UserInfoRepository;
-import com.example.managementbackend.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 
@@ -33,13 +31,13 @@ public class UserInfoServiceImp implements UserInfoService {
     }
 
     @Override
-    public UserInfo userlogin(String email, String password) {
+    public Optional<UserInfo> userlogin(String email, String password) {
         UserInfo userInfo = new UserInfo();
         if (userInfo == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
 
         }
-        return ResponseEntity.of(Optional.of(userInfoRepository.findByEmail(email))).getBody();
+        return Optional.ofNullable(ResponseEntity.of(Optional.of(userInfoRepository.findByEmail(email))).getBody());
 
     }
 
