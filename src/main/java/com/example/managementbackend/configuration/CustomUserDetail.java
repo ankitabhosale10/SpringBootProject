@@ -18,7 +18,9 @@ public class CustomUserDetail implements UserDetails {
         this.userInfo = userInfo;
     }
 
-
+    @Enumerated(EnumType.STRING)
+    private CustomUserRole customUserRole;
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 

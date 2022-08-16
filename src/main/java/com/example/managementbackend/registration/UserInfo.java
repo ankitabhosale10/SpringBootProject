@@ -20,20 +20,19 @@ public class UserInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "firstName is required")
+
     @Column(name = "first_name")
     private String firstName;
 
-    @NotNull(message = "lastName is required")
+
     @Column(name = "last_name")
     private String lastName;
 
-    @Email(message = "Email is not Valid")
-    @NotNull(message = "Email is required")
+
     @Column(length = 255, unique = true, nullable = true)
     private String email;
 
-    @NotNull(message = "password is required")
+
     @Column(name = "password")
     private String password;
 

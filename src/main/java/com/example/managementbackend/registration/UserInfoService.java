@@ -10,11 +10,9 @@ public interface UserInfoService {
 
     UserInfo userLogin(LoginData loginData);
 
-//    UserInfo userVerificationCode(String authToken);
-
     void sendVerificationEmail(UserInfo userInfo, String siteURL) throws MessagingException, UnsupportedEncodingException;
 
     boolean verify(String verificationCode);;
 
-
+//    UserInfo userVerificationCode(String authToken);
 }

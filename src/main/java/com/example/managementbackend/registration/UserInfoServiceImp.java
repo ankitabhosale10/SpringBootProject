@@ -9,7 +9,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
@@ -30,7 +29,6 @@ public class UserInfoServiceImp implements UserInfoService {
     @Autowired
     private JavaMailSender mailSender;
 
-
     @Override
     public void userRegister(UserInfo dto, String siteURL)  throws MessagingException, UnsupportedEncodingException {
         UserInfo userInfo = new UserInfo();
@@ -39,6 +37,7 @@ public class UserInfoServiceImp implements UserInfoService {
         userInfo.setEmail(dto.getEmail());
         String encodedPassword = passwordEncoder.encode(userInfo.getPassword());
         userInfo.setPassword(encodedPassword);
+//        userInfo.setPassword(passwordEncoder.encode(dto.getPassword()));
         Timestamp ts = new Timestamp(System.currentTimeMillis());
         dto.setCreatedDate(ts);
         dto.setActive(false);
@@ -52,7 +51,7 @@ public class UserInfoServiceImp implements UserInfoService {
     @Override
     public void sendVerificationEmail(UserInfo userInfo, String siteURL) throws MessagingException, UnsupportedEncodingException {
         String toAddress = userInfo.getEmail();
-        String fromAddress = "ankitarbhosale@gmail.com";
+        String fromAddress = "ankitarbhosale17@gmail.com";
         String senderName = "Online Shopping";
         String subject = "Please verify your registration";
         String content = "Dear [[name]],<br>"
