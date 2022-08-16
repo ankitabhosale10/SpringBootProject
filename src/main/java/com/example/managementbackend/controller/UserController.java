@@ -1,5 +1,6 @@
 package com.example.managementbackend.controller;
 
+import com.example.managementbackend.registration.LoginData;
 import com.example.managementbackend.registration.UserInfo;
 import com.example.managementbackend.registration.UserInfoRepository;
 import com.example.managementbackend.registration.UserInfoService;
@@ -26,17 +27,10 @@ public class UserController {
     }
 
     @PostMapping("/api/register")
-    public ModelAndView signup(@Valid @ModelAttribute UserInfo dto, BindingResult result) {
+    public ModelAndView signup( @ModelAttribute UserInfo dto) {
         ModelAndView mv = new ModelAndView();
-        UserInfo userInfo = repo.findByEmail(dto.getEmail());
-        if (userInfo == null) {
-            Timestamp ts = new Timestamp(System.currentTimeMillis());
-            dto.setCreatedDate(ts);
-            dto.setActive(false);
-            dto.setDeleted(false);
-            UUID uuid = UUID.randomUUID();
-            dto.setVerificationCode(uuid.toString());
-            repo.save(dto);
+        UserInfo userInfo = userInfoService.userRegister(dto);
+        if(userInfo != null) {
             mv.setViewName("welcome");
             mv.addObject("message", "Thanks For Registration");
             mv.addObject("result", dto);
@@ -48,45 +42,33 @@ public class UserController {
         }
     }
 
+
     @PostMapping("/api/login")
-    public ModelAndView processForm(@Valid @ModelAttribute("loginData") UserInfo loginData, BindingResult result) {
-        UserInfo userInfo = repo.findByEmail(loginData.getEmail());
+    public ModelAndView processForm(@ModelAttribute LoginData loginData) {
         ModelAndView mv = new ModelAndView();
-        if (userInfo != null) {
-            if (userInfo.getPassword().equals(loginData.getPassword())) {
-                mv.setViewName("success");
-                mv.addObject("message", "Thanks For Login");
-                mv.addObject("loginData", loginData);
-                return mv;
-            } else {
-                mv.setViewName("login");
-                mv.addObject("message", "Invalid Credential");
-                return mv;
-            }
-        } else {
-            mv.setViewName("login");
-            mv.addObject("message", "valid Credential");
+        UserInfo userInfo = userInfoService.userLogin(loginData);
+        if (userInfo.getPassword().equals(loginData.getPassword())) {
+            mv.setViewName("success");
+            mv.addObject("message", "Thanks For Login");
+            mv.addObject("loginData", loginData);
             return mv;
         }
+        mv.setViewName("login");
+        mv.addObject("message", "Invalid Credential");
+        return mv;
     }
 
     @GetMapping("/account-verification/{authToken}")
     public ModelAndView checkToken(@RequestParam("authToken") String authToken) {
-        UserInfo dto = repo.findByVerificationCode(authToken);
         ModelAndView mv = new ModelAndView();
+        UserInfo dto = userInfoService.userVerificationCode(authToken);
         if (dto != null) {
-            dto.setActive(true);
-            dto.setVerificationCode(null);
-            Timestamp ts = new Timestamp(System.currentTimeMillis());
-            dto.setModifiedDate(ts);
-            repo.save(dto);
             mv.setViewName("verification-success");
             mv.addObject("message", "Your Account is verified");
             return mv;
-        } else {
-            mv.setViewName("verification-failed");
-            mv.addObject("message", "Verification link is expired");
-            return mv;
         }
+        mv.setViewName("verification-failed");
+        mv.addObject("message", "Verification link is expired");
+        return mv;
     }
 }

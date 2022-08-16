@@ -4,8 +4,11 @@ import java.util.Optional;
 
 public interface UserInfoService {
 
-    UserInfo userRegister(UserInfo userInfoDTO);
+    UserInfo userRegister(UserInfo dto);
 
-    Optional<UserInfo> userlogin(String email, String password);
+    UserInfo userLogin(LoginData loginData);
+
+    UserInfo userVerificationCode(String authToken);
+
 
 }
