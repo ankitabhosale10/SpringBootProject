@@ -12,9 +12,8 @@ import java.sql.Timestamp;
 @Setter
 @Getter
 @ToString
-@NoArgsConstructor
 @AllArgsConstructor
-
+@NoArgsConstructor
 public class UserInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

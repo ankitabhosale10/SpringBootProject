@@ -20,7 +20,7 @@ public class CustomUserDetail implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private CustomUserRole customUserRole;
-    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 

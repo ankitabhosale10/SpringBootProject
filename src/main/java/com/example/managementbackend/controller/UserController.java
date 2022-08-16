@@ -7,16 +7,12 @@ import com.example.managementbackend.registration.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
-import java.sql.Timestamp;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -32,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping("/api/register")
-    public ModelAndView signup( UserInfo userInfo, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+    public ModelAndView signup(@ModelAttribute UserInfo userInfo, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         ModelAndView mv = new ModelAndView();
         userInfoService.userRegister(userInfo, getSiteURL(request));
             mv.setViewName("register_success");
