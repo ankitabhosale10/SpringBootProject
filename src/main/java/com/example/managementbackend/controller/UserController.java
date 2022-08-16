@@ -5,11 +5,16 @@ import com.example.managementbackend.registration.UserInfo;
 import com.example.managementbackend.registration.UserInfoRepository;
 import com.example.managementbackend.registration.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -27,18 +32,24 @@ public class UserController {
     }
 
     @PostMapping("/api/register")
-    public ModelAndView signup( @ModelAttribute UserInfo dto) {
+    public ModelAndView signup( UserInfo userInfo, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         ModelAndView mv = new ModelAndView();
-        UserInfo userInfo = userInfoService.userRegister(dto);
-        if(userInfo != null) {
-            mv.setViewName("welcome");
-            mv.addObject("message", "Thanks For Registration");
-            mv.addObject("result", dto);
+        userInfoService.userRegister(userInfo, getSiteURL(request));
+            mv.setViewName("register_success");
             return mv;
+    }
+
+    private String getSiteURL(HttpServletRequest request) {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
+    }
+
+    @GetMapping("/verify")
+    public String verifyUser(@Param("code") String code) {
+        if (userInfoService.verify(code)) {
+            return "verify_success";
         } else {
-            mv.setViewName("registration");
-            mv.addObject("message", "email already exist");
-            return mv;
+            return "verify_fail";
         }
     }
 
@@ -58,17 +69,17 @@ public class UserController {
         return mv;
     }
 
-    @GetMapping("/account-verification/{authToken}")
-    public ModelAndView checkToken(@RequestParam("authToken") String authToken) {
-        ModelAndView mv = new ModelAndView();
-        UserInfo dto = userInfoService.userVerificationCode(authToken);
-        if (dto != null) {
-            mv.setViewName("verification-success");
-            mv.addObject("message", "Your Account is verified");
-            return mv;
-        }
-        mv.setViewName("verification-failed");
-        mv.addObject("message", "Verification link is expired");
-        return mv;
-    }
+//    @GetMapping("/account-verification/{authToken}")
+//    public ModelAndView checkToken(@RequestParam("authToken") String authToken) {
+//        ModelAndView mv = new ModelAndView();
+//        UserInfo dto = userInfoService.userVerificationCode(authToken);
+//        if (dto != null) {
+//            mv.setViewName("verification-success");
+//            mv.addObject("message", "Your Account is verified");
+//            return mv;
+//        }
+//        mv.setViewName("verification-failed");
+//        mv.addObject("message", "Verification link is expired");
+//        return mv;
+//    }
 }

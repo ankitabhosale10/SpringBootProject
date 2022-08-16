@@ -49,7 +49,4 @@ public class UserInfo {
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
 
-    private boolean isDeleted;
-
-    private  Timestamp lastLoginTime;
 }
