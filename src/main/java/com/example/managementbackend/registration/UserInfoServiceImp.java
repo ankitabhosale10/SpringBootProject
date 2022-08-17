@@ -35,9 +35,10 @@ public class UserInfoServiceImp implements UserInfoService {
         userInfo.setFirstName(dto.getFirstName());
         userInfo.setLastName(dto.getLastName());
         userInfo.setEmail(dto.getEmail());
-        String encodedPassword = passwordEncoder.encode(userInfo.getPassword());
-        userInfo.setPassword(encodedPassword);
+//        String encodedPassword = passwordEncoder.encode(userInfo.getPassword());
+//        userInfo.setPassword(encodedPassword);
 //        userInfo.setPassword(passwordEncoder.encode(dto.getPassword()));
+        userInfo.setPassword(dto.getPassword());
         Timestamp ts = new Timestamp(System.currentTimeMillis());
         dto.setCreatedDate(ts);
         dto.setActive(false);

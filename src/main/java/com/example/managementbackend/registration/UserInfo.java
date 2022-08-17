@@ -44,6 +44,10 @@ public class UserInfo {
 
     private String authToken;
 
+    private boolean isDeleted;
+
+    private  Timestamp lastLoginTime;
+
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
 
