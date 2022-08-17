@@ -1,15 +1,12 @@
 package com.example.managementbackend.controller;
 
-import com.example.managementbackend.registration.LoginData;
-import com.example.managementbackend.registration.UserInfo;
-import com.example.managementbackend.registration.UserInfoRepository;
-import com.example.managementbackend.registration.UserInfoService;
+import com.example.managementbackend.registration.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -28,27 +25,33 @@ public class UserController {
     }
 
     @PostMapping("/api/register")
-    public ModelAndView signup(@ModelAttribute UserInfo userInfo, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+    public ModelAndView signup(@ModelAttribute UserInfo userInfo, Model model, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         ModelAndView mv = new ModelAndView();
-        userInfoService.userRegister(userInfo, getSiteURL(request));
+        userInfoService.userRegister(userInfo);
+        String siteURL = Utility.getSiteURL(request);
+        userInfoService.sendVerificationEmail(userInfo,siteURL);
             mv.setViewName("register_success");
             return mv;
     }
 
-    private String getSiteURL(HttpServletRequest request) {
-        String siteURL = request.getRequestURL().toString();
-        return siteURL.replace(request.getServletPath(), "");
-    }
-
     @GetMapping("/verify")
-    public String verifyUser(@Param("code") String code) {
-        if (userInfoService.verify(code)) {
-            return "verify_success";
-        } else {
-            return "verify_fail";
+    public ModelAndView verifyUser(@Param("code") String code,Model model) {
+        ModelAndView mv = new ModelAndView();
+        boolean verified= userInfoService.verify(code);
+        if( verified ){
+            mv.setViewName("verify_success");
         }
+         mv.setViewName("verify_fail");
+        return mv;
+//        String pageTitle= verified ? "Verification Succeeded" : "Verification Failed";
+//        model.addAttribute("pageTitle",pageTitle);
+//        return (verified ? "verify_success" : "verify_fail");
+//        if (userInfoService.verify(code)) {
+//            return "verify_success";
+//        } else {
+//            return "verify_fail";
+//        }
     }
-
 
     @PostMapping("/api/login")
     public ModelAndView processForm(@ModelAttribute LoginData loginData) {
@@ -65,17 +68,4 @@ public class UserController {
         return mv;
     }
 
-//    @GetMapping("/account-verification/{authToken}")
-//    public ModelAndView checkToken(@RequestParam("authToken") String authToken) {
-//        ModelAndView mv = new ModelAndView();
-//        UserInfo dto = userInfoService.userVerificationCode(authToken);
-//        if (dto != null) {
-//            mv.setViewName("verification-success");
-//            mv.addObject("message", "Your Account is verified");
-//            return mv;
-//        }
-//        mv.setViewName("verification-failed");
-//        mv.addObject("message", "Verification link is expired");
-//        return mv;
-//    }
 }

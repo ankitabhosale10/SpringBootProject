@@ -30,24 +30,21 @@ public class UserInfoServiceImp implements UserInfoService {
     private JavaMailSender mailSender;
 
     @Override
-    public void userRegister(UserInfo dto, String siteURL)  throws MessagingException, UnsupportedEncodingException {
+    public UserInfo userRegister(UserInfo dto)  throws MessagingException, UnsupportedEncodingException {
         UserInfo userInfo = new UserInfo();
         userInfo.setFirstName(dto.getFirstName());
         userInfo.setLastName(dto.getLastName());
         userInfo.setEmail(dto.getEmail());
-//        String encodedPassword = passwordEncoder.encode(userInfo.getPassword());
-//        userInfo.setPassword(encodedPassword);
-//        userInfo.setPassword(passwordEncoder.encode(dto.getPassword()));
-        userInfo.setPassword(dto.getPassword());
+        userInfo.setPassword(passwordEncoder.encode(dto.getPassword()));
         Timestamp ts = new Timestamp(System.currentTimeMillis());
         dto.setCreatedDate(ts);
         dto.setActive(false);
-        String randomCode = RandomString.make(64);
-        userInfo.setVerificationCode(randomCode);
-        sendVerificationEmail(userInfo, siteURL);
-        userInfoRepository.save(dto);
+        UUID uuid = UUID.randomUUID();
+        dto.setVerificationCode(uuid.toString());
+//        String randomCode = RandomString.make(64);
+//        userInfo.setVerificationCode(randomCode);
+       return userInfoRepository.save(dto);
     }
-
 
     @Override
     public void sendVerificationEmail(UserInfo userInfo, String siteURL) throws MessagingException, UnsupportedEncodingException {
@@ -69,7 +66,7 @@ public class UserInfoServiceImp implements UserInfoService {
         helper.setSubject(subject);
 
         content = content.replace("[[name]]", userInfo.getFirstName());
-        String verifyURL = siteURL + "/verify?code=" + userInfo.getVerificationCode();
+        String verifyURL = siteURL + "/user/verify?code=" + userInfo.getVerificationCode();
 
         content = content.replace("[[URL]]", verifyURL);
 
@@ -78,16 +75,14 @@ public class UserInfoServiceImp implements UserInfoService {
         mailSender.send(message);
     }
 
-    @Override
     public boolean verify(String verificationCode) {
         UserInfo userInfo = userInfoRepository.findByVerificationCode(verificationCode);
-
         if (userInfo == null || userInfo.isActive()) {
             return false;
         } else {
-            userInfo.setVerificationCode(null);
-            userInfo.setActive(true);
-            userInfoRepository.save(userInfo);
+//            userInfo.setVerificationCode(null);
+//            userInfo.setActive(true);
+            userInfoRepository.isActive(userInfo.getId());
             return true;
         }
     }
@@ -99,16 +94,5 @@ public class UserInfoServiceImp implements UserInfoService {
         }
         return userInfoRepository.findByEmail(loginData.getEmail());
     }
-
-
-//    @Override
-//    public UserInfo userVerificationCode(String authToken) {
-//        UserInfo dto=new UserInfo();
-//        dto.setActive(true);
-//        dto.setVerificationCode(null);
-//        Timestamp ts = new Timestamp(System.currentTimeMillis());
-//        dto.setModifiedDate(ts);
-//        return userInfoRepository.save(dto);
-//    }
 
 }
