@@ -6,8 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+
 
 @Repository
+@Transactional
 public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
 
     UserInfo findByEmail(String email);
@@ -17,9 +20,8 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
 
     @Query("SELECT U FROM UserInfo U WHERE U.verificationCode = ?1")
     public UserInfo findByVerificationCode(String code);
-
-    @Query("UPDATE UserInfo U SET U.isActive=true WHERE U.id = ?1")
     @Modifying
+    @Query("UPDATE UserInfo U SET U.isActive=true WHERE U.id = ?1")
     public void isActive(long id);
 
 }

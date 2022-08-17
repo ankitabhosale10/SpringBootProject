@@ -38,19 +38,12 @@ public class UserController {
     public ModelAndView verifyUser(@Param("code") String code,Model model) {
         ModelAndView mv = new ModelAndView();
         boolean verified= userInfoService.verify(code);
-        if( verified ){
+        if( verified ==true){
             mv.setViewName("verify_success");
+            return mv;
         }
          mv.setViewName("verify_fail");
-        return mv;
-//        String pageTitle= verified ? "Verification Succeeded" : "Verification Failed";
-//        model.addAttribute("pageTitle",pageTitle);
-//        return (verified ? "verify_success" : "verify_fail");
-//        if (userInfoService.verify(code)) {
-//            return "verify_success";
-//        } else {
-//            return "verify_fail";
-//        }
+         return mv;
     }
 
     @PostMapping("/api/login")
