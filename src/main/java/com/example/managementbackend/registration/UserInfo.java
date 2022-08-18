@@ -40,8 +40,6 @@ public class UserInfo {
 
     private boolean isActive;
 
-    private String authToken;
-
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
 

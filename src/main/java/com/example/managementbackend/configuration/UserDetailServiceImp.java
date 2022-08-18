@@ -13,6 +13,7 @@ public class UserDetailServiceImp implements UserDetailsService {
     @Autowired
     private UserInfoRepository userInfoRepository;
 
+
     private final static String USER_NOT_FOUND_MSG = "user with email %s not found";
 
     @Override

@@ -16,6 +16,7 @@ public class LoginData {
     @NotNull(message = "Email is required")
     @Column(length = 255, unique = true, nullable = true)
     private String email;
+
     @NotNull(message = "password is required")
     @Column(name = "password")
     private String password;

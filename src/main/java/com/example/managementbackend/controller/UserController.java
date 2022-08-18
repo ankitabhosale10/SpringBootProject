@@ -1,5 +1,6 @@
 package com.example.managementbackend.controller;
 
+import com.example.managementbackend.registration.LoginData;
 import com.example.managementbackend.registration.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -47,13 +48,13 @@ public class UserController {
     }
 
     @PostMapping("/api/login")
-    public ModelAndView processForm(@ModelAttribute LoginData loginData) {
+    public ModelAndView processForm(@ModelAttribute LoginData userLogin) {
         ModelAndView mv = new ModelAndView();
-        UserInfo userInfo = userInfoService.userLogin(loginData);
-        if (userInfo.getPassword().equals(loginData.getPassword())) {
+        UserInfo userInfo = userInfoService.userLogin(userLogin);
+        if (userInfo.getPassword().equals(userLogin.getPassword())) {
             mv.setViewName("success");
             mv.addObject("message", "Thanks For Login");
-            mv.addObject("loginData", loginData);
+            mv.addObject("loginData", userLogin);
             return mv;
         }
         mv.setViewName("login");

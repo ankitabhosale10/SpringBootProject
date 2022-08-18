@@ -20,8 +20,10 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
 
     @Query("SELECT U FROM UserInfo U WHERE U.verificationCode = ?1")
     public UserInfo findByVerificationCode(String code);
+
     @Modifying
     @Query("UPDATE UserInfo U SET U.isActive=true WHERE U.id = ?1")
     public void isActive(long id);
+
 
 }

@@ -1,9 +1,7 @@
 package com.example.managementbackend.registration;
 
-
-import net.bytebuddy.utility.RandomString;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,11 +11,11 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
-import java.util.Optional;
 import java.util.UUID;
 
 
 @Service
+@AllArgsConstructor
 public class UserInfoServiceImp implements UserInfoService {
 
     @Autowired
@@ -44,6 +42,11 @@ public class UserInfoServiceImp implements UserInfoService {
 //        String randomCode = RandomString.make(64);
 //        userInfo.setVerificationCode(randomCode);
        return userInfoRepository.save(dto);
+    }
+
+    @Override
+    public UserInfo findByUserName(String email) {
+        return userInfoRepository.findByEmail(email);
     }
 
     @Override
@@ -80,12 +83,12 @@ public class UserInfoServiceImp implements UserInfoService {
         if (userInfo == null || userInfo.isActive()) {
             return false;
         } else {
-//            userInfo.setVerificationCode(null);
-//            userInfo.setActive(true);
             userInfoRepository.isActive(userInfo.getId());
             return true;
         }
     }
+
+
     @Override
     public UserInfo userLogin(LoginData loginData) {
         UserInfo userInfo = new UserInfo();
