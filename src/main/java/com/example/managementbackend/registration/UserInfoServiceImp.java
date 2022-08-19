@@ -39,9 +39,7 @@ public class UserInfoServiceImp implements UserInfoService {
         dto.setActive(false);
         UUID uuid = UUID.randomUUID();
         dto.setVerificationCode(uuid.toString());
-//        String randomCode = RandomString.make(64);
-//        userInfo.setVerificationCode(randomCode);
-       return userInfoRepository.save(dto);
+        return userInfoRepository.save(dto);
     }
 
     @Override
@@ -87,7 +85,6 @@ public class UserInfoServiceImp implements UserInfoService {
             return true;
         }
     }
-
 
     @Override
     public UserInfo userLogin(LoginData loginData) {

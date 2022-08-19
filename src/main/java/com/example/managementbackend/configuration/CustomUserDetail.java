@@ -23,7 +23,6 @@ public class CustomUserDetail implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(userInfo.getEmail());
         return List.of(simpleGrantedAuthority);
     }

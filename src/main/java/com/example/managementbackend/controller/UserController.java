@@ -4,6 +4,7 @@ import com.example.managementbackend.registration.LoginData;
 import com.example.managementbackend.registration.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ import java.io.UnsupportedEncodingException;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    private UserInfoRepository repo;
+    private UserInfoRepository userInfoRepository;
 
     private BCryptPasswordEncoder passwordEncoder;
     private UserInfoService userInfoService;
@@ -31,8 +32,8 @@ public class UserController {
         userInfoService.userRegister(userInfo);
         String siteURL = Utility.getSiteURL(request);
         userInfoService.sendVerificationEmail(userInfo,siteURL);
-            mv.setViewName("register_success");
-            return mv;
+        mv.setViewName("register_success");
+        return mv;
     }
 
     @GetMapping("/verify")
@@ -51,7 +52,7 @@ public class UserController {
     public ModelAndView processForm(@ModelAttribute LoginData userLogin) {
         ModelAndView mv = new ModelAndView();
         UserInfo userInfo = userInfoService.userLogin(userLogin);
-        if (userInfo.getPassword().equals(userLogin.getPassword())) {
+        if (userInfo.getPassword().equals(userLogin.getPassword()) && userInfo.isActive()) {
             mv.setViewName("success");
             mv.addObject("message", "Thanks For Login");
             mv.addObject("loginData", userLogin);
