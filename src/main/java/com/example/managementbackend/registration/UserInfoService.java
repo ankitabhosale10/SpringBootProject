@@ -15,5 +15,11 @@ public interface UserInfoService {
 
     boolean verify(String verificationCode);;
 
+    void updateResetPassword(String verificationCode, String email);
 
+
+    UserInfo getByResetPassword(String verificationCode);
+
+
+    void updatePassword(UserInfo userInfo, String password);
 }

@@ -20,4 +20,6 @@ public class LoginData {
     @NotNull(message = "password is required")
     @Column(name = "password")
     private String password;
+
+    private String resetPassword;
 }

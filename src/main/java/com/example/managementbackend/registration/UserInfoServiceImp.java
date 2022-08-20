@@ -95,4 +95,27 @@ public class UserInfoServiceImp implements UserInfoService {
         return userInfoRepository.findByEmail(loginData.getEmail());
     }
 
+    @Override
+    public void updateResetPassword(String verificationCode, String email)  {
+        UserInfo userInfo = userInfoRepository.findByEmail(email);
+        if (userInfo != null) {
+            userInfo.setResetPassword(verificationCode);
+            userInfoRepository.save(userInfo);
+        } else {
+            throw new UsernameNotFoundException("Could not find any customer with the email " + email);
+        }
+    }
+    @Override
+    public UserInfo getByResetPassword(String verificationCode) {
+        return userInfoRepository.findByResetPassword(verificationCode);
+    }
+    @Override
+    public void updatePassword(UserInfo userInfo, String newPassword) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        userInfo.setPassword(encodedPassword);
+        userInfo.setResetPassword(null);
+        userInfoRepository.save(userInfo);
+    }
+
 }

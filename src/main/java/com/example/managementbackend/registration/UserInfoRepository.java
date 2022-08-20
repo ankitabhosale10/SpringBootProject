@@ -25,5 +25,6 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
     @Query("UPDATE UserInfo U SET U.isActive=true WHERE U.id = ?1")
     public void isActive(long id);
 
+    public UserInfo findByResetPassword(String verificationCode);
 
 }
