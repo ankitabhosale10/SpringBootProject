@@ -17,14 +17,11 @@ public class UserInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(name = "first_name")
     private String firstName;
 
-
     @Column(name = "last_name")
     private String lastName;
-
 
     @Column(length = 255, unique = true, nullable = true)
     private String email;
@@ -35,8 +32,6 @@ public class UserInfo {
 
     @Column
     private Timestamp createdDate;
-
-    private Timestamp modifiedDate;
 
     private boolean isActive;
 
