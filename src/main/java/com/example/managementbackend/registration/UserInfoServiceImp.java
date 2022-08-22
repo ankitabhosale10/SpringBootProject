@@ -27,6 +27,8 @@ public class UserInfoServiceImp implements UserInfoService {
     @Autowired
     private JavaMailSender mailSender;
 
+
+
     @Override
     public UserInfo userRegister(UserInfo dto)  throws MessagingException, UnsupportedEncodingException {
         UserInfo userInfo = new UserInfo();
@@ -52,10 +54,10 @@ public class UserInfoServiceImp implements UserInfoService {
         String toAddress = userInfo.getEmail();
         String fromAddress = "ankitarbhosale17@gmail.com";
         String senderName = "Online Shopping";
-        String subject = "Please verify your registration";
+        String subject = "Successfully registered email";
         String content = "Dear [[name]],<br>"
                 + "Please click the link below to verify your registration:<br>"
-                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
+                + "<h3><a href=\"[[URL]]\" target=\"_self\">Active Account</a></h3>"
                 + "Thank you,<br>"
                 + "Online Shopping";
 

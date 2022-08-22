@@ -23,14 +23,15 @@ public class EmailService implements EmailSender{
     @Override
     @Async
     public void send(String to, String email) {
+
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper =
-                    new MimeMessageHelper(mimeMessage, "utf-8");
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, "utf-8");
             helper.setText(email, true);
             helper.setTo(to);
             helper.setSubject("Confirm your email");
             helper.setFrom("ankitarbhosale17@gmail.com");
+
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             LOGGER.error("failed to send email", e);
