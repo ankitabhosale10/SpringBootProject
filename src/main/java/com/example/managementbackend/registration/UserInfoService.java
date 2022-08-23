@@ -17,9 +17,7 @@ public interface UserInfoService {
 
     void updateResetPassword(String verificationCode, String email);
 
-
     UserInfo getByResetPassword(String verificationCode);
-
 
     void updatePassword(UserInfo userInfo, String password);
 }
