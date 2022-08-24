@@ -48,13 +48,36 @@
 
                                     <h2 style="color: #404040; font-weight: 300; margin: 0 0 12px 0; font-size: 24px; line-height: 30px; font-family: 'Helvetica neue', Helvetica, arial, sans-serif; ">
 
-                                        Hi there,
+                                     Dear  <span th:text="${name}" > </span>
+<!--                                        Dear  <span th:text="${URL}" > </span>-->
 
                                     </h2>
 
                                     <p style="color: #666666; font-weight: 400; font-size: 15px; line-height: 21px; font-family: 'Helvetica neue', Helvetica, arial, sans-serif; " class="">Please click on the button to complete the verification process for Registration:</p>
-                                    <p><input style="border:none; background-color:  #7ad108;color: #fff;width: 45%; height: 49px; border-radius: 20px;" type="submit" value="Active Account"></p>
-                                    <p style="color: #666666; font-weight: 400; font-size: 15px; line-height: 21px; font-family: 'Helvetica neue', Helvetica, arial, sans-serif; " class="">If you didn&#39;t attempt to verify your email address with Online Shopping, please delete this email.</p>
+                                    <table border="0" cellspacing="0" cellpadding="0" width="100%">
+
+                                        <tr>
+
+                                            <td style="-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;">
+
+
+
+                                                <a th:href="@{'http://localhost:9092/user/verify?code=' + ${URL}}" style="display:inline-block; color: #fff; font-weight: 400;
+
+                    border-left: 15px solid; border-right: 15px solid; border-top: 12px solid; border-bottom: 12px solid; font-size: 17px;
+
+                    text-decoration: none; text-align: center; -webkit-text-size-adjust: none; -webkit-border-radius: 3px; -moz-border-radius: 3px;
+
+                     border-radius: 3px; font-family: 'Helvetica neue', Helvetica, arial, sans-serif; background-color: #7ad108; border-color: #7ad108;">Active Account</a>
+
+
+
+                                            </td>
+
+                                        </tr>
+
+                                    </table>
+
                                     <p style="color: #666666; font-weight: 400; font-size: 17px; line-height: 24px; font-family: 'Helvetica neue', Helvetica, arial, sans-serif; margin-bottom: 6px; margin-top: 24px;" class="">Thank you,</p>
                                     <p style="color: #666666; font-weight: 400; font-size: 15px; line-height: 21px; font-family: 'Helvetica neue', Helvetica, arial, sans-serif; " class="">Online Shopping</p>
 

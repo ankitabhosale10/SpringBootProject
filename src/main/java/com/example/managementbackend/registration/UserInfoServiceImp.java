@@ -1,5 +1,6 @@
 package com.example.managementbackend.registration;
 
+import com.example.managementbackend.email.EmailService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -7,11 +8,14 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.UUID;
+
 
 
 @Service
@@ -27,6 +31,8 @@ public class UserInfoServiceImp implements UserInfoService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    private SpringTemplateEngine templateEngine;
 
 
     @Override
@@ -49,7 +55,7 @@ public class UserInfoServiceImp implements UserInfoService {
         return userInfoRepository.findByEmail(email);
     }
 
-    @Override
+
     public void sendVerificationEmail(UserInfo userInfo, String siteURL) throws MessagingException, UnsupportedEncodingException {
         String toAddress = userInfo.getEmail();
         String fromAddress = "ankitarbhosale17@gmail.com";
@@ -63,18 +69,23 @@ public class UserInfoServiceImp implements UserInfoService {
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
-
         helper.setFrom(fromAddress, senderName);
         helper.setTo(toAddress);
         helper.setSubject(subject);
 
-        content = content.replace("[[name]]", userInfo.getFirstName());
+        Context context=new Context();
+        context.setVariable("name",userInfo.getFirstName());
         String verifyURL = siteURL + "/user/verify?code=" + userInfo.getVerificationCode();
+        context.setVariable("URL",userInfo.getVerificationCode());
+        String html=templateEngine.process("email_verification",context);
 
-        content = content.replace("[[URL]]", verifyURL);
+//        content = content.replace("[[name]]", userInfo.getFirstName());
+//        String verifyURL = siteURL + "/user/verify?code=" + userInfo.getVerificationCode();
+//        content = content.replace("[[URL]]", verifyURL);
+//        helper.setText(content, true);
 
-        helper.setText(content, true);
-
+        helper.setText(html, true);
+//        helper.setText(verifyURL,true);
         mailSender.send(message);
     }
 
