@@ -25,7 +25,6 @@ public class ProductServiceImp implements ProductService{
         product.setDescription(pro.getDescription());
         product.setUnitPrice(pro.getUnitPrice());
         product.setQuantity(pro.getQuantity());
-        pro.setActive(false);
         return productRepository.save(pro);
     }
 }

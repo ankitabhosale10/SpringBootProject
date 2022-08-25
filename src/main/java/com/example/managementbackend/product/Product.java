@@ -40,9 +40,6 @@ public class Product {
     @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "is_active")
-    private boolean active;
-
 
 
 }
