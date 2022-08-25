@@ -27,5 +27,11 @@ public class WebController
         modelAndView.setViewName("login");
         return modelAndView;
     }
+    @GetMapping("/products")
+    public ModelAndView productEnter() {
+        ModelAndView mv=new ModelAndView();
+        mv.setViewName("product");
+        return mv;
+    }
 
 }
