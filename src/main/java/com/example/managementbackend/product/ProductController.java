@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/product")
 public class ProductController {
@@ -45,4 +47,21 @@ public class ProductController {
         return new ResponseEntity<>(productService.getById(Id), HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Product>> getAllProducts() {
+        List<Product> products = productService.getproducts();
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @PutMapping("/api/updateProduct")
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
+        productService.updateProducts(product);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/api/deleteProduct")
+    public ResponseEntity<Product> deleteProduct(@RequestParam(value ="id") Long Id) {
+        productService.deleteTodo(Id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
