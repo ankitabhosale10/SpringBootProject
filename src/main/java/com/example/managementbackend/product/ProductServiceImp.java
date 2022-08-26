@@ -36,10 +36,10 @@ public class ProductServiceImp implements ProductService{
     }
 
     @Override
-    public List<Product> getproducts() {
-        List<Product> products = new ArrayList<>();
-        productRepository.findAll().forEach(products::add);
-        return products;
+    public List<Product> getProducts() {
+//        List<Product> products = new ArrayList<>();
+       return productRepository.findAll();
+
     }
 
     @Override

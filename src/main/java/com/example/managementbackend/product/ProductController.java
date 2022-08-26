@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -24,7 +23,6 @@ public class ProductController {
         this.productRepository = productRepository;
         this.productService = productService;
     }
-
 
 //    @PostMapping("/api/productEntry")
 //    public ModelAndView productEntry(@ModelAttribute Product product){
@@ -49,7 +47,7 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = productService.getproducts();
+        List<Product> products = productService.getProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
