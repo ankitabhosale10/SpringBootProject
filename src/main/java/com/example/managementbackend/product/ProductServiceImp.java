@@ -18,13 +18,18 @@ public class ProductServiceImp implements ProductService{
 
 
     @Override
-    public Product insertProduct(Product pro) {
-        Product product=new Product();
-        product.setProductName(pro.getProductName());
-        product.setBrand(pro.getBrand());
-        product.setDescription(pro.getDescription());
-        product.setUnitPrice(pro.getUnitPrice());
-        product.setQuantity(pro.getQuantity());
-        return productRepository.save(pro);
+    public Product insertProduct(Product product) {
+//        Product product=new Product();
+//        product.setProductName(pro.getProductName());
+//        product.setBrand(pro.getBrand());
+//        product.setDescription(pro.getDescription());
+//        product.setUnitPrice(pro.getUnitPrice());
+//        product.setQuantity(pro.getQuantity());
+        return productRepository.save(product);
+    }
+
+    @Override
+    public Product getById(Long id) {
+        return productRepository.findById(id).get();
     }
 }

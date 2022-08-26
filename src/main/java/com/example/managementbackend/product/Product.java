@@ -1,8 +1,7 @@
 package com.example.managementbackend.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
 
+import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -29,7 +28,6 @@ public class Product {
     private String brand;
 
     @Column(name = "description")
-    @JsonIgnore
     @NotBlank(message = "Please Enter the Product Description")
     private String description;
 

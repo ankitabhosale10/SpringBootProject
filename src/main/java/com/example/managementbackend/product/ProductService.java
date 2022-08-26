@@ -5,4 +5,5 @@ public interface ProductService {
 
     Product insertProduct(Product product);
 
+    Product getById(Long id);
 }
