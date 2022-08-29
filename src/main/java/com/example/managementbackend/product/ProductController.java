@@ -35,8 +35,6 @@ public class ProductController {
     @PostMapping("/api/productEntry")
     public ResponseEntity<Product> productEntry(@RequestBody Product product){
        Product pro= productService.insertProduct(product);
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.add("product", "/product" + product1.getId().toString());
         return new ResponseEntity<>(pro,HttpStatus.OK);
     }
 
