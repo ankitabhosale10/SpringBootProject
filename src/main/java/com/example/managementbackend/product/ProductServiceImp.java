@@ -21,12 +21,6 @@ public class ProductServiceImp implements ProductService{
 
     @Override
     public Product insertProduct(Product product) {
-//        Product product=new Product();
-//        product.setProductName(pro.getProductName());
-//        product.setBrand(pro.getBrand());
-//        product.setDescription(pro.getDescription());
-//        product.setUnitPrice(pro.getUnitPrice());
-//        product.setQuantity(pro.getQuantity());
         return productRepository.save(product);
     }
 
@@ -37,19 +31,12 @@ public class ProductServiceImp implements ProductService{
 
     @Override
     public List<Product> getProducts() {
-//        List<Product> products = new ArrayList<>();
        return productRepository.findAll();
 
     }
 
     @Override
     public void updateProducts( Product product) {
-//        Product product = new Product();
-//        product.setProductName(pro.getProductName());
-//        product.setBrand(pro.getBrand());
-//        product.setDescription(pro.getDescription());
-//        product.setUnitPrice(pro.getUnitPrice());
-//        product.setQuantity(pro.getQuantity());
         productRepository.save(product);
     }
 
