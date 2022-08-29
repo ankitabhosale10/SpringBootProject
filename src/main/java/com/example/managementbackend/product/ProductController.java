@@ -34,10 +34,10 @@ public class ProductController {
 
     @PostMapping("/api/productEntry")
     public ResponseEntity<Product> productEntry(@RequestBody Product product){
-        Product product1 = productService.insertProduct(product);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("product", "/product" + product1.getId().toString());
-        return new ResponseEntity<>(product1, httpHeaders, HttpStatus.CREATED);
+        productService.insertProduct(product);
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.add("product", "/product" + product1.getId().toString());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/api/getById")
