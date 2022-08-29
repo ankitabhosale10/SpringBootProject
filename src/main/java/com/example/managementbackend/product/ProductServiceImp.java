@@ -2,8 +2,6 @@ package com.example.managementbackend.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,7 +30,6 @@ public class ProductServiceImp implements ProductService{
     @Override
     public List<Product> getProducts() {
        return productRepository.findAll();
-
     }
 
     @Override
