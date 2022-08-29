@@ -101,7 +101,7 @@ public class UserInfoServiceImp implements UserInfoService {
 
     @Override
     public UserInfo userLogin(LoginData loginData) {
-        UserInfo userInfo = new UserInfo();
+//        UserInfo userInfo = new UserInfo();
         if (loginData == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }

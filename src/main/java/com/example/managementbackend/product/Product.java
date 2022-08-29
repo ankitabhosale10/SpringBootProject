@@ -38,6 +38,4 @@ public class Product {
     @Column(name = "quantity")
     private int quantity;
 
-
-
 }
