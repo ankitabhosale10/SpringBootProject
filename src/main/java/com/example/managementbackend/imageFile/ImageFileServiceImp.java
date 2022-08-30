@@ -33,9 +33,9 @@ public class ImageFileServiceImp implements ImageFileService{
         }
 
         //filecopy
-//        Files.copy(file.getInputStream(), Paths.get(filePath));
+        Files.copy(file.getInputStream(), Paths.get(filePath));
 
-        return name;
+        return fileName1;
     }
 
     @Override
