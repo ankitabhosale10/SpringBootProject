@@ -55,7 +55,8 @@ public class ProductController {
 
     @DeleteMapping("/api/deleteProduct")
     public ResponseEntity<Product> deleteProduct(@RequestParam(value ="id") Long Id) {
-        productService.deleteTodo(Id);
+        productService.deleteProducts(Id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 }
