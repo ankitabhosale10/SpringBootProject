@@ -22,13 +22,18 @@ import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
 @Controller
-public class ForgotPasswordController<UserNotFoundException extends Throwable> {
+public class ForgotPasswordController {
 
     @Autowired
     private JavaMailSender mailSender;
 
     @Autowired
     private UserInfoService userInfoService;
+
+    public ForgotPasswordController(JavaMailSender mailSender, UserInfoService userInfoService) {
+        this.mailSender = mailSender;
+        this.userInfoService = userInfoService;
+    }
 
     @GetMapping("/forgot_password")
     public String showForgotPasswordForm() {
