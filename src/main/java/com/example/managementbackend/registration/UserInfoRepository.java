@@ -16,15 +16,15 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
     UserInfo findByEmail(String email);
 
     @Query("SELECT U FROM UserInfo U WHERE U.email=:email")
-    public UserInfo getByUserEmail(@Param("email") String email);
+     UserInfo getByUserEmail(@Param("email") String email);
 
     @Query("SELECT U FROM UserInfo U WHERE U.verificationCode = ?1")
-    public UserInfo findByVerificationCode(String code);
+     UserInfo findByVerificationCode(String code);
 
     @Modifying
     @Query("UPDATE UserInfo U SET U.isActive=true WHERE U.id = ?1")
-    public void isActive(long id);
+     void isActive(long id);
 
-    public UserInfo findByResetPassword(String verificationCode);
+     UserInfo findByResetPassword(String verificationCode);
 
 }
