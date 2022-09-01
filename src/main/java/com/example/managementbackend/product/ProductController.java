@@ -36,9 +36,9 @@ public class ProductController {
         return new ResponseEntity<>(pro,HttpStatus.OK);
     }
 
-    @GetMapping("/api/getById")
-    public ResponseEntity getById(@RequestParam(value ="id") Long Id) {
-        return new ResponseEntity<>(productService.getById(Id), HttpStatus.OK);
+    @GetMapping("/api/getById/{id}")
+    public ResponseEntity getById(@PathVariable("id") Long id ) {
+        return new ResponseEntity<>(productService.getById(id), HttpStatus.OK);
     }
 
     @GetMapping
