@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -39,7 +40,6 @@ public class ForgotPasswordController<UserNotFoundException extends Throwable> {
         String email = request.getParameter("email");
         UUID uuid = UUID.randomUUID();
         String verificationCode = uuid.toString();
-//        String token = RandomString.make(30);
         try {
             userInfoService.updateResetPassword(verificationCode, email);
             String resetPasswordLink = Utility.getSiteURL(request) + "/reset_password?code=" + verificationCode;
@@ -75,33 +75,22 @@ public class ForgotPasswordController<UserNotFoundException extends Throwable> {
     }
 
     @GetMapping("/reset_password")
-    public String showResetPasswordForm(@Param(value = "code") String verificationCode, Model model) {
-        UserInfo userInfo = userInfoService.getByResetPassword(verificationCode);
-        model.addAttribute("verificationCode", verificationCode);
-
-        if (userInfo == null) {
-            model.addAttribute("message", "Invalid Verification Code");
-            return "message";
-        }
-        return "reset_password_form";
+    public ModelAndView showResetPasswordForm(@Param(value = "code") String Code, Model model) {
+        ModelAndView mv = new ModelAndView();
+        userInfoService.getByResetPassword(Code);
+        mv.setViewName("reset_password_form");
+        return mv;
     }
 
-    @PostMapping("/reset_password")
-    public String processResetPassword(HttpServletRequest request, Model model) {
+    @PostMapping("/reset/password")
+    public ModelAndView processResetPassword(HttpServletRequest request, Model model) {
 //        String verificationCode = request.getParameter("verificationCode");
 
         String password = request.getParameter("verificationCode");
-
+        ModelAndView mv = new ModelAndView();
         UserInfo userInfo = userInfoService.getByResetPassword(password);
-        model.addAttribute("title", "Reset your password");
-
-        if (userInfo == null) {
-            model.addAttribute("message", "Invalid Verification Code");
-            return "message";
-        } else {
             userInfoService.updatePassword(userInfo, password);
-            model.addAttribute("message", "You have successfully changed your password.");
-        }
-        return "message";
+            mv.setViewName("message");
+            return mv;
     }
 }

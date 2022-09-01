@@ -38,7 +38,6 @@ public class UserInfo {
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
 
-    @Column(name = "reset_password")
+    @Column(name = "reset_Password")
     private String resetPassword;
-
 }
