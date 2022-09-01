@@ -20,10 +20,11 @@ public class UserController {
     @Autowired
     private UserInfoRepository userInfoRepository;
 
-    private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
     private UserInfoService userInfoService;
 
-    public UserController(UserInfoService userInfoService) {
+    public UserController(UserInfoRepository userInfoRepository, UserInfoService userInfoService) {
+        this.userInfoRepository = userInfoRepository;
         this.userInfoService = userInfoService;
     }
 
