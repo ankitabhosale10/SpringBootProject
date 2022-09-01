@@ -33,8 +33,11 @@ public class ProductServiceImp implements ProductService{
     }
 
     @Override
-    public void updateProducts( Product product) {
-        productRepository.save(product);
+    public void updateProductsById(Long id, Product product) {
+        Product product1= productRepository.findById(id).get();
+        product1.setQuantity(product.getQuantity());
+        product1.setUnitPrice(product.getUnitPrice());
+        productRepository.save(product1);
     }
 
     @Override

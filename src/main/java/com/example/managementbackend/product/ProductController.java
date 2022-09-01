@@ -47,10 +47,10 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @PutMapping("/api/updateProduct")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
-        productService.updateProducts(product);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PutMapping("/api/updateProduct/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id,@RequestBody Product product) {
+        productService.updateProductsById(id,product);
+        return new ResponseEntity<>(productService.getById(id),HttpStatus.OK);
     }
 
     @DeleteMapping("/api/deleteProduct")
