@@ -45,6 +45,7 @@ public class UserInfoServiceImp implements UserInfoService {
         Timestamp ts = new Timestamp(System.currentTimeMillis());
         dto.setCreatedDate(ts);
         dto.setActive(false);
+
         UUID uuid = UUID.randomUUID();
         dto.setVerificationCode(uuid.toString());
         return userInfoRepository.save(dto);
@@ -75,7 +76,7 @@ public class UserInfoServiceImp implements UserInfoService {
 
         Context context=new Context();
         context.setVariable("name",userInfo.getFirstName());
-        String verifyURL = siteURL + "/user/verify?code=" + userInfo.getVerificationCode();
+        //String verifyURL = siteURL + "/user/verify?code=" + userInfo.getVerificationCode();
         context.setVariable("URL",userInfo.getVerificationCode());
         String html=templateEngine.process("email_verification",context);
 

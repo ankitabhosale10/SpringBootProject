@@ -4,14 +4,13 @@ import com.example.managementbackend.registration.LoginData;
 import com.example.managementbackend.registration.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -29,8 +28,13 @@ public class UserController {
     }
 
     @PostMapping("/api/register")
-    public ModelAndView signup(@ModelAttribute UserInfo userInfo, Model model, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+    public ModelAndView signup(@ModelAttribute UserInfo userInfo,@RequestParam(value = "checkMeOut", defaultValue = "false")boolean exampleCheck1, Model model, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         ModelAndView mv = new ModelAndView();
+        UserInfo userInfo1=userInfoService.findByUserName(userInfo.getEmail());
+        if (userInfo1 != null){
+            mv.setViewName("user");
+            return mv;
+        }
         userInfoService.userRegister(userInfo);
         String siteURL = Utility.getSiteURL(request);
         userInfoService.sendVerificationEmail(userInfo,siteURL);
@@ -54,7 +58,7 @@ public class UserController {
     public ModelAndView processForm(@ModelAttribute LoginData userLogin) {
         ModelAndView mv = new ModelAndView();
         UserInfo userInfo = userInfoService.userLogin(userLogin);
-        if (userInfo.getPassword().equals(userLogin.getPassword()) && userInfo.isActive()) {
+        if (userInfo != null && (userInfo.getPassword().equals(userLogin.getPassword()) && userInfo.isActive())) {
             mv.setViewName("success");
             mv.addObject("message", "Thanks For Login");
             mv.addObject("loginData", userLogin);
