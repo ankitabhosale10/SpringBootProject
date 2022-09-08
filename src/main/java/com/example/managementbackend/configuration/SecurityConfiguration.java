@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class    SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class  SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
@@ -33,41 +33,41 @@ public class    SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
-    @Bean
-    public UserDetailsService getUserDetailsService() {
-        return  new JwtUserDetailService();
-    }
+//    @Bean
+//    public UserDetailsService getUserDetailsService() {
+//        return  new JwtUserDetailService();
+//    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
-       DaoAuthenticationProvider daoAuthenticationProvider=new DaoAuthenticationProvider();
-       daoAuthenticationProvider.setUserDetailsService(this.getUserDetailsService());
-       daoAuthenticationProvider.setPasswordEncoder(this.passwordEncoder());
-       return  daoAuthenticationProvider;
-    }
+//    @Bean
+//    public DaoAuthenticationProvider authenticationProvider(){
+//       DaoAuthenticationProvider daoAuthenticationProvider=new DaoAuthenticationProvider();
+//       daoAuthenticationProvider.setUserDetailsService(this.getUserDetailsService());
+//       daoAuthenticationProvider.setPasswordEncoder(this.passwordEncoder());
+//       return  daoAuthenticationProvider;
+//    }
 
-    public MessageSource messageSource(){
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        // Load file: validation.properties
-        messageSource.setBasename("classpath:validation");
-        messageSource.setDefaultEncoding("UTF-8");
-        return messageSource;
-    }
+//    public MessageSource messageSource(){
+//        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+//        // Load file: validation.properties
+//        messageSource.setBasename("classpath:validation");
+//        messageSource.setDefaultEncoding("UTF-8");
+//        return messageSource;
+//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(jwtUserDetailService).passwordEncoder(passwordEncoder());
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+//        return authenticationConfiguration.getAuthenticationManager();
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
