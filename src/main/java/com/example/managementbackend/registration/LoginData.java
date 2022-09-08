@@ -21,5 +21,5 @@ public class LoginData {
     @Column(name = "password")
     private String password;
 
-    private String resetPassword;
+//    private String resetPassword;
 }
