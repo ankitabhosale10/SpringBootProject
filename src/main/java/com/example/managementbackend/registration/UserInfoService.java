@@ -1,5 +1,7 @@
 package com.example.managementbackend.registration;
 
+import com.example.managementbackend.token.JwtRequest;
+
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 
@@ -7,7 +9,7 @@ public interface UserInfoService {
 
     UserInfo userRegister(UserInfo dto) throws MessagingException, UnsupportedEncodingException;
 
-    UserInfo userLogin(LoginData loginData);
+    UserInfo userLogin(JwtRequest jwtRequest);
 
     UserInfo findByUserName(String email);
 

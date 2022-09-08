@@ -1,6 +1,6 @@
 package com.example.managementbackend.controller;
 
-import com.example.managementbackend.registration.LoginData;
+import com.example.managementbackend.token.JwtRequest;
 import com.example.managementbackend.registration.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -55,7 +54,7 @@ public class UserController {
     }
 
     @PostMapping("/api/login")
-    public ModelAndView processForm(@ModelAttribute LoginData userLogin) {
+    public ModelAndView processForm(@ModelAttribute JwtRequest userLogin) {
         ModelAndView mv = new ModelAndView();
         UserInfo userInfo = userInfoService.userLogin(userLogin);
         if (userInfo != null && (userInfo.getPassword().equals(userLogin.getPassword()) && userInfo.isActive())) {

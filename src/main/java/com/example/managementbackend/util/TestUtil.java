@@ -1,7 +1,6 @@
-package com.example.managementbackend.Util;
+package com.example.managementbackend.util;
 
 import com.example.managementbackend.configuration.CustomJasyptEncryptorConfig;
-import com.example.managementbackend.configuration.SecurityConfiguration;
 import org.jasypt.encryption.StringEncryptor;
 
 public class TestUtil {

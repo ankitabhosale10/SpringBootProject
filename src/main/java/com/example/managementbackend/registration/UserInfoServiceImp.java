@@ -1,6 +1,6 @@
 package com.example.managementbackend.registration;
 
-import com.example.managementbackend.email.EmailService;
+import com.example.managementbackend.token.JwtRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -101,12 +101,12 @@ public class UserInfoServiceImp implements UserInfoService {
     }
 
     @Override
-    public UserInfo userLogin(LoginData loginData) {
+    public UserInfo userLogin(JwtRequest jwtRequest) {
 //        UserInfo userInfo = new UserInfo();
-        if (loginData == null) {
+        if (jwtRequest == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        return userInfoRepository.findByEmail(loginData.getEmail());
+        return userInfoRepository.findByEmail(jwtRequest.getEmail());
     }
 
     @Override
