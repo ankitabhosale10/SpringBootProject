@@ -18,6 +18,9 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
     @Query("SELECT U FROM UserInfo U WHERE U.email=:email")
      UserInfo getByUserEmail(@Param("email") String email);
 
+    @Query("SELECT U FROM UserInfo U WHERE U.authToken=:authToken")
+    UserInfo getByUserAuthToken(@Param("authToken") String authToken);
+
     @Query("SELECT U FROM UserInfo U WHERE U.verificationCode = ?1")
      UserInfo findByVerificationCode(String code);
 

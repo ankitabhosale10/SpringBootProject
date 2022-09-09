@@ -1,6 +1,7 @@
 package com.example.managementbackend.registration;
 
 import lombok.*;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -40,4 +41,6 @@ public class UserInfo {
 
     @Column(name = "reset_Password")
     private String resetPassword;
+
+    private String authToken;
 }

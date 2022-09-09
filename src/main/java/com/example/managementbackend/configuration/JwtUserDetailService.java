@@ -34,8 +34,10 @@ public class JwtUserDetailService implements UserDetailsService {
         UserInfo userInfo = userInfoRepository.getByUserEmail(username);
         if (userInfo == null) {
             throw new UsernameNotFoundException("User not found");
+        } else {
+            CustomUserDetail customUserDetail = new CustomUserDetail(userInfo);
+            return customUserDetail;
         }
-        CustomUserDetail customUserDetail = new CustomUserDetail(userInfo);
-        return customUserDetail;
+
     }
 }
