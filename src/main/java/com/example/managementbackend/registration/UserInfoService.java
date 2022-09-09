@@ -22,4 +22,5 @@ public interface UserInfoService {
     UserInfo getByResetPassword(String verificationCode);
 
     void updatePassword(UserInfo userInfo, String password);
+
 }

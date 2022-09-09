@@ -3,25 +3,24 @@ package com.example.managementbackend.controller;
 import com.example.managementbackend.registration.UserInfo;
 import com.example.managementbackend.registration.UserInfoService;
 import com.example.managementbackend.registration.Utility;
-import net.bytebuddy.utility.RandomString;
+import com.example.managementbackend.token.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
-@Controller
+@RestController
 public class ForgotPasswordController {
 
     @Autowired
@@ -30,10 +29,8 @@ public class ForgotPasswordController {
     @Autowired
     private UserInfoService userInfoService;
 
-    public ForgotPasswordController(JavaMailSender mailSender, UserInfoService userInfoService) {
-        this.mailSender = mailSender;
-        this.userInfoService = userInfoService;
-    }
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @GetMapping("/forgot_password")
     public String showForgotPasswordForm() {
@@ -80,22 +77,33 @@ public class ForgotPasswordController {
     }
 
     @GetMapping("/reset_password")
-    public ModelAndView showResetPasswordForm(@Param(value = "code") String Code, Model model) {
-        ModelAndView mv = new ModelAndView();
-        userInfoService.getByResetPassword(Code);
-        mv.setViewName("reset_password_form");
-        return mv;
+    public String showResetPasswordForm(@Param(value = "code") String verificationCode, Model model) {
+        UserInfo userInfo = userInfoService.getByResetPassword(verificationCode);
+        model.addAttribute("verificationCode", verificationCode);
+
+        if (userInfo == null) {
+            model.addAttribute("message", "Invalid Verification Code");
+            return "message";
+        }
+        return "reset_password_form";
     }
 
-    @PostMapping("/reset/password")
-    public ModelAndView processResetPassword(HttpServletRequest request, Model model) {
+    @PostMapping("/reset_password")
+    public String processResetPassword(HttpServletRequest request, Model model) {
 //        String verificationCode = request.getParameter("verificationCode");
 
         String password = request.getParameter("verificationCode");
-        ModelAndView mv = new ModelAndView();
+
         UserInfo userInfo = userInfoService.getByResetPassword(password);
+        model.addAttribute("title", "Reset your password");
+
+        if (userInfo == null) {
+            model.addAttribute("message", "Invalid Verification Code");
+            return "message";
+        } else {
             userInfoService.updatePassword(userInfo, password);
-            mv.setViewName("message");
-            return mv;
+            model.addAttribute("message", "You have successfully changed your password.");
+        }
+        return "message";
     }
 }

@@ -132,4 +132,5 @@ public class UserInfoServiceImp implements UserInfoService {
         userInfoRepository.save(userInfo);
     }
 
+
 }
